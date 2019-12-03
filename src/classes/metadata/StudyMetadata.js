@@ -1,14 +1,15 @@
 // - createStacks
+// - createStacks
+import { api } from 'dicomweb-client';
+import isDisplaySetReconstructable from '../../utils/isDisplaySetReconstructable';
+import OHIFError from '../OHIFError';
 import DICOMWeb from './../../DICOMWeb';
+// - createStacks
+import { isImage } from './../../utils/isImage';
 import ImageSet from './../ImageSet';
 import { InstanceMetadata } from './InstanceMetadata';
 import { Metadata } from './Metadata';
-import OHIFError from '../OHIFError';
 import { SeriesMetadata } from './SeriesMetadata';
-// - createStacks
-import { api } from 'dicomweb-client';
-// - createStacks
-import { isImage } from './../../utils/isImage';
 
 export class StudyMetadata extends Metadata {
   constructor(data, uid) {
@@ -567,6 +568,16 @@ const makeDisplaySet = (series, instances) => {
         (parseInt(b.getRawValue('x00200013', 0)) || 0)
       );
     });
+  }
+
+  const isReconstructable = isDisplaySetReconstructable(series, instances);
+
+  imageSet.isReconstructable = isReconstructable.value;
+
+  if (isReconstructable.missingFrames) {
+    // TODO -> This is currently unused, but may be used for reconstructing
+    // Volumes with gaps later on.
+    imageSet.missingFrames = isReconstructable.missingFrames;
   }
 
   // Include the first image instance number (after sorted)

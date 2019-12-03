@@ -1,10 +1,9 @@
-import { studyMetadataManager, updateMetaDataManager } from '../utils';
-
-import OHIFError from './OHIFError';
-import { StudyMetadata } from './metadata/StudyMetadata';
-import { StudyMetadataSource } from './StudyMetadataSource.js';
-import { StudySummary } from './metadata/StudySummary';
 import { retrieveStudyMetadata } from '../studies/retrieveStudyMetadata.js';
+import { studyMetadataManager, updateMetaDataManager } from '../utils';
+import { StudyMetadata } from './metadata/StudyMetadata';
+import { StudySummary } from './metadata/StudySummary';
+import OHIFError from './OHIFError';
+import { StudyMetadataSource } from './StudyMetadataSource.js';
 
 export class OHIFStudyMetadataSource extends StudyMetadataSource {
   /**

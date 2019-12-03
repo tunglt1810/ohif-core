@@ -1,8 +1,9 @@
 {
   "name": "ohif-core",
-  "version": "0.4.0",
+  "version": "0.11.1-m",
   "description": "Useful functions and classes for building web-based medical imaging applications",
   "author": "OHIF",
+  "forker": "TungLT",
   "license": "MIT",
   "repository": "OHIF/ohif-core",
   "main": "dist/index.umd.js",
