@@ -9,7 +9,12 @@ export default function isDisplaySetReconstructable(series, instances) {
 
   const modality = series._data.modality; // TODO -> Is there a better way to get this?
   const isMultiframe = instances[0].getRawValue('x00280008') > 1;
-
+  console.log(
+    'check displayset reconstructable',
+    series,
+    instances,
+    isMultiframe
+  );
   if (!constructableModalities.includes(modality)) {
     return { value: false };
   }
