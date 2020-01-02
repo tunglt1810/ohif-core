@@ -6532,8 +6532,12 @@ function isDisplaySetReconstructable(series, instances) {
   // Can't reconstruct if we only have one image.
   var modality = series._data.modality; // TODO -> Is there a better way to get this?
 
-  var isMultiframe = instances[0].getRawValue('x00280008') > 1;
-  console.log('check displayset reconstructable', series, instances, isMultiframe);
+  var isMultiframe = instances[0].getRawValue('x00280008') > 1; // console.log(
+  //   'check displayset reconstructable',
+  //   series,
+  //   instances,
+  //   isMultiframe
+  // );
 
   if (!constructableModalities.includes(modality)) {
     return {
