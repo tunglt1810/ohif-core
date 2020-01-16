@@ -6557,10 +6557,15 @@
 	    };
 	  }
 
-	  if (isMultiframe) {
-	    return processMultiframe(instances[0]);
-	  } else {
-	    return processSingleframe(instances);
+	  try {
+	    if (isMultiframe) {
+	      return processMultiframe(instances[0]);
+	    } else {
+	      return processSingleframe(instances);
+	    }
+	  } catch (e) {
+	    console.error(e);
+	    return false;
 	  }
 	}
 
