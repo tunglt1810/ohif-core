@@ -76,7 +76,17 @@ function processSingleframe(instances) {
   // Allow reconstruction, but pass back the number of missing frames.
   if (instances.length > 2) {
     const firstIpp = _getImagePositionPatient(firstImage);
+    if (!firstIpp) {
+      return {
+        value: false,
+      };
+    }
     const lastIpp = _getImagePositionPatient(instances[instances.length - 1]);
+    if (!lastIpp) {
+      return {
+        value: false,
+      };
+    }
     const averageSpacingBetweenFrames =
       _getPerpendicularDistance(firstIpp, lastIpp) / (instances.length - 1);
 
@@ -85,7 +95,10 @@ function processSingleframe(instances) {
     for (let i = 1; i < instances.length; i++) {
       const instance = instances[i];
       const ipp = _getImagePositionPatient(instance);
-
+      if (!ipp)
+        return {
+          value: false,
+        };
       const spacingBetweenFrames = _getPerpendicularDistance(ipp, previousIpp);
       const spacingIssue = _getSpacingIssue(
         spacingBetweenFrames,
@@ -146,10 +159,13 @@ function _getSpacingIssue(spacing, averageSpacing) {
 }
 
 function _getImagePositionPatient(instance) {
-  return instance
-    .getTagValue('x00200032')
-    .split('\\')
-    .map(element => Number(element));
+  return (
+    instance.getTagValue('x00200032') &&
+    instance
+      .getTagValue('x00200032')
+      .split('\\')
+      .map(element => Number(element))
+  );
 }
 
 function _getPerpendicularDistance(a, b) {

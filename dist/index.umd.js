@@ -6608,7 +6608,19 @@
 	  if (instances.length > 2) {
 	    var firstIpp = _getImagePositionPatient(firstImage);
 
+	    if (!firstIpp) {
+	      return {
+	        value: false
+	      };
+	    }
+
 	    var lastIpp = _getImagePositionPatient(instances[instances.length - 1]);
+
+	    if (!lastIpp) {
+	      return {
+	        value: false
+	      };
+	    }
 
 	    var averageSpacingBetweenFrames = _getPerpendicularDistance(firstIpp, lastIpp) / (instances.length - 1);
 	    var previousIpp = firstIpp;
@@ -6617,6 +6629,10 @@
 	      var _instance = instances[_i];
 
 	      var ipp = _getImagePositionPatient(_instance);
+
+	      if (!ipp) return {
+	        value: false
+	      };
 
 	      var spacingBetweenFrames = _getPerpendicularDistance(ipp, previousIpp);
 
@@ -6679,7 +6695,7 @@
 	}
 
 	function _getImagePositionPatient(instance) {
-	  return instance.getTagValue('x00200032').split('\\').map(function (element) {
+	  return instance.getTagValue('x00200032') && instance.getTagValue('x00200032').split('\\').map(function (element) {
 	    return Number(element);
 	  });
 	}
